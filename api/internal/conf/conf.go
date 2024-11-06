@@ -380,7 +380,7 @@ func mergeSchema(apisixSchema, customizeSchema []byte) ([]byte, error) {
 
 // initialize etcd config
 func initEtcdConfig(conf Etcd) {
-	var endpoints = []string{"127.0.0.1:2379"}
+	var endpoints = []string{"etcd-server:2379"}
 	if len(conf.Endpoints) > 0 {
 		endpoints = conf.Endpoints
 	}

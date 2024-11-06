@@ -17,6 +17,7 @@
 package filter
 
 import (
+	"github.com/apisix/manager-api/internal/core/store"
 	"net/http"
 	"strings"
 
@@ -30,6 +31,7 @@ import (
 func Authentication() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if c.Request.URL.Path == "/apisix/admin/user/login" ||
+			c.Request.URL.Path == "/apisix/admin/user/add" ||
 			c.Request.URL.Path == "/apisix/admin/tool/version" ||
 			!strings.HasPrefix(c.Request.URL.Path, "/apisix") {
 			c.Next()
@@ -74,7 +76,9 @@ func Authentication() gin.HandlerFunc {
 				return
 			}
 
-			if _, ok := conf.UserList[claims.Subject]; !ok {
+			authStore := store.GetStore(store.HubKeySystemConfig)
+			_, err = authStore.Stg.Get(c, claims.Subject)
+			if err != nil {
 				log.Warnf("user not exists by token claims subject %s", claims.Subject)
 				c.AbortWithStatusJSON(http.StatusUnauthorized, errResp)
 				return

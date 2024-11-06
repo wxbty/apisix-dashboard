@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package authentication
+package user
 
 import (
 	"github.com/apisix/manager-api/internal/core/store"
@@ -43,35 +43,38 @@ func NewHandler() (handler.RouteRegister, error) {
 }
 
 func (h *Handler) ApplyRoute(r *gin.Engine) {
-	r.POST("/apisix/admin/user/login", wgin.Wraps(h.userLogin,
-		wrapper.InputType(reflect.TypeOf(LoginInput{}))))
+	r.POST("/apisix/admin/user/add", wgin.Wraps(h.userAdd,
+		wrapper.InputType(reflect.TypeOf(Input{}))))
 }
 
-type UserSession struct {
+type Session struct {
 	Token string `json:"token"`
 }
 
-// swagger:model LoginInput
-type LoginInput struct {
+type Input struct {
 	// user name
+	Token string `json:"token" validate:"required"`
+
 	Username string `json:"username" validate:"required"`
 	// password
 	Password string `json:"password" validate:"required"`
 }
 
-func (h *Handler) userLogin(c droplet.Context) (interface{}, error) {
-	input := c.Input().(*LoginInput)
+func (h *Handler) userAdd(c droplet.Context) (interface{}, error) {
+	input := c.Input().(*Input)
+	perToken := input.Token
+	if perToken != "abc12345" {
+		return nil, consts.ErrPermission
+	}
+
 	username := input.Username
 	password := input.Password
 
-	dbPassword, err := h.authStore.Stg.Get(c.Context(), username)
-	if err != nil {
-		return nil, consts.ErrUsernamePassword
+	_, err := h.authStore.Stg.Get(c.Context(), username)
+	if err == nil {
+		return nil, consts.ExistUsernamePassword
 	}
-
-	if password != dbPassword {
-		return nil, consts.ErrUsernamePassword
-	}
+	h.authStore.Stg.Create(c.Context(), username, password)
 
 	// create JWT for session
 	claims := jwt.StandardClaims{
@@ -83,7 +86,7 @@ func (h *Handler) userLogin(c droplet.Context) (interface{}, error) {
 	signedToken, _ := token.SignedString([]byte(conf.AuthConf.Secret))
 
 	// output token
-	return &UserSession{
+	return &Session{
 		Token: signedToken,
 	}, nil
 }

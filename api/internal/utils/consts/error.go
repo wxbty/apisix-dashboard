@@ -34,7 +34,9 @@ const (
 
 var (
 	// ErrorUsernamePassword is the error means username or password is not correct
-	ErrUsernamePassword = errors.New("username or password error")
+	ErrUsernamePassword   = errors.New("username or password error")
+	ExistUsernamePassword = errors.New("username exist")
+	ErrPermission         = errors.New("permission reject")
 	// ErrorIDUsername is the error use for the input's id and username is different
 	ErrIDUsername = errors.New("consumer's id and username must be a same value")
 	// ErrorParameterID is the error use for parameter ID is empty

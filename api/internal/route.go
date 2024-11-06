@@ -18,6 +18,7 @@ package internal
 
 import (
 	"fmt"
+	"github.com/apisix/manager-api/internal/handler/user"
 	"path/filepath"
 
 	// "github.com/gin-contrib/pprof"
@@ -83,6 +84,7 @@ func SetUpRouter() *gin.Engine {
 		schema.NewSchemaHandler,
 		healthz.NewHandler,
 		authentication.NewHandler,
+		user.NewHandler,
 		global_rule.NewHandler,
 		server_info.NewHandler,
 		label.NewHandler,
