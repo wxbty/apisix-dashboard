@@ -325,6 +325,22 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 9080
+      nodePort: 31684
+  selector:
+    app.kubernetes.io/instance: apisix
+    app.kubernetes.io/name: apisix
+  type: NodePort
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: apisix-pmxs
+  namespace: default
+  labels:
+    app.kubernetes.io/instance: apisix
+    app.kubernetes.io/name: apisix
+spec:
+  ports:
     - name: apisix-pmxs
       protocol: TCP
       port: 9091

@@ -11,7 +11,7 @@ data:
         scrape_interval: 15s
         metrics_path: "/apisix/prometheus/metrics"
         static_configs:
-          - targets: ["apisix-gateway:9091"]
+          - targets: ["apisix-pmxs:9091"]
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

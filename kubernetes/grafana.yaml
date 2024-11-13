@@ -29,16 +29,9 @@ spec:
         fsGroup: 472
         supplementalGroups:
           - 0
-      volumes:
-        - name: ge-config
-          configMap:
-            name: ge-config
       containers:
         - name: grafana
           image: grafana/grafana:9.1.0
-          volumeMounts:  
-            - mountPath: /etc/grafana
-              name: ge-config
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
