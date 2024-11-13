@@ -37,7 +37,7 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then go env -w GOPROXY=https://goproxy.io,
 
 FROM node:16-alpine as fe-builder
 
-ARG ENABLE_PROXY=false
+ARG RUN_HTML_BUILD=false
 
 WORKDIR /usr/local/apisix-dashboard
 
@@ -45,9 +45,14 @@ COPY --from=pre-build /usr/local/apisix-dashboard .
 
 WORKDIR /usr/local/apisix-dashboard/web
 
-RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://registry.npmmirror.com/ ; fi \
-    && yarn install \
-    && yarn build
+
+RUN if [ "$RUN_HTML_BUILD" = "true" ] ; then \
+        yarn config set registry https://registry.npmmirror.com/ && \
+        yarn install && \
+        yarn build; \
+    else \
+        COPY ./html ../output/html/ ; \
+    fi
 
 FROM alpine:latest as prod
 
