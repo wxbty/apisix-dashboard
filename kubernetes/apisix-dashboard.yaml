@@ -27,7 +27,7 @@ spec:
             defaultMode: 420
       containers:
         - name: apisix-dashboard
-          image: apisix-dashboard:1.0.4
+          image: apisix-dashboard:1.0.0
           ports:
             - name: http
               containerPort: 9000
