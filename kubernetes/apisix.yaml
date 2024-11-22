@@ -26,7 +26,7 @@ spec:
             defaultMode: 420
       initContainers:
         - name: wait-etcd
-          image: busybox:1.28
+          image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/e2e-test-images/busybox:1.29-4
           command:
             - sh
             - '-c'
