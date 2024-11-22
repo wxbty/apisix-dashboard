@@ -2,7 +2,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: apisix-etcd
-  namespace: apisix
+  namespace: kube-system
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
@@ -118,7 +118,7 @@ spec:
                     app.kubernetes.io/instance: apisix-etcd
                     app.kubernetes.io/name: apisix-etcd
                 namespaces:
-                  - apisix
+                  - kube-system
                 topologyKey: kubernetes.io/hostname
       schedulerName: default-scheduler
   serviceName: apisix-etcd-headless
@@ -131,13 +131,13 @@ kind: Service
 apiVersion: v1
 metadata:
   name: apisix-etcd-headless
-  namespace: apisix
+  namespace: kube-system
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   annotations:
     meta.helm.sh/release-name: apisix-etcd
-    meta.helm.sh/release-namespace: apisix
+    meta.helm.sh/release-namespace: kube-system
     service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
 spec:
   ports:
@@ -166,13 +166,13 @@ kind: Service
 apiVersion: v1
 metadata:
   name: apisix-etcd
-  namespace: apisix
+  namespace: kube-system
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   annotations:
     meta.helm.sh/release-name: apisix-etcd
-    meta.helm.sh/release-namespace: apisix
+    meta.helm.sh/release-namespace: kube-system
 spec:
   ports:
     - name: client
