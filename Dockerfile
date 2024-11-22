@@ -46,13 +46,13 @@ COPY --from=pre-build /usr/local/apisix-dashboard .
 WORKDIR /usr/local/apisix-dashboard/web
 
 
-RUN if [ "$RUN_HTML_BUILD" = "true" ] ; then \
-        yarn config set registry https://registry.npmmirror.com/ && \
-        yarn install && \
-        yarn build; \
-    else \
-        COPY ./html ../output/html/ ; \
-    fi
+RUN if [ "$RUN_HTML_BUILD" = "true" ]; then \
+    yarn config set registry https://registry.npmmirror.com/ && \
+    yarn install && \
+    yarn build; \
+else \
+    cp -r ./html ../output/html/; \
+fi
 
 FROM alpine:latest as prod
 
