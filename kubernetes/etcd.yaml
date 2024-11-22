@@ -2,7 +2,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: apisix-etcd
-  namespace: default
+  namespace: apisix
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
