@@ -116,19 +116,6 @@ spec:
                   - default
                 topologyKey: kubernetes.io/hostname
       schedulerName: default-scheduler
-  volumeClaimTemplates:
-    - kind: PersistentVolumeClaim
-      apiVersion: v1
-      metadata:
-        name: data
-        creationTimestamp: null
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-        volumeMode: Filesystem
   serviceName: apisix-etcd-headless
   podManagementPolicy: Parallel
   updateStrategy:
@@ -195,3 +182,8 @@ spec:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   type: ClusterIP
+volumes:
+  - name: data
+    nfs:
+      path: /nfs/data
+      server: 10.16.131.27
