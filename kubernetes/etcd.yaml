@@ -118,7 +118,7 @@ spec:
                     app.kubernetes.io/instance: apisix-etcd
                     app.kubernetes.io/name: apisix-etcd
                 namespaces:
-                  - default
+                  - apisix
                 topologyKey: kubernetes.io/hostname
       schedulerName: default-scheduler
   serviceName: apisix-etcd-headless
@@ -131,13 +131,13 @@ kind: Service
 apiVersion: v1
 metadata:
   name: apisix-etcd-headless
-  namespace: default
+  namespace: apisix
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   annotations:
     meta.helm.sh/release-name: apisix-etcd
-    meta.helm.sh/release-namespace: default
+    meta.helm.sh/release-namespace: apisix
     service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
 spec:
   ports:
@@ -166,13 +166,13 @@ kind: Service
 apiVersion: v1
 metadata:
   name: apisix-etcd
-  namespace: default
+  namespace: apisix
   labels:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   annotations:
     meta.helm.sh/release-name: apisix-etcd
-    meta.helm.sh/release-namespace: default
+    meta.helm.sh/release-namespace: apisix
 spec:
   ports:
     - name: client
