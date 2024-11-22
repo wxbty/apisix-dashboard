@@ -51,7 +51,7 @@ RUN if [ "$RUN_HTML_BUILD" = "true" ]; then \
     yarn install && \
     yarn build; \
 else \
-    cp -r ./html ../output/html/; \
+    cp -r /usr/local/apisix-dashboard/html /usr/local/apisix-dashboard/output/html/; \
 fi
 
 FROM alpine:latest as prod
