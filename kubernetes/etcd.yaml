@@ -19,6 +19,11 @@ spec:
         app.kubernetes.io/instance: apisix-etcd
         app.kubernetes.io/name: apisix-etcd
     spec:
+      volumes:
+        - name: data
+          nfs:
+            path: /nfs/data
+            server: 10.16.131.27
       containers:
         - name: apisix-etcd
           image: docker.io/bitnami/etcd:3.5.1-debian-10-r31
@@ -182,8 +187,3 @@ spec:
     app.kubernetes.io/instance: apisix-etcd
     app.kubernetes.io/name: apisix-etcd
   type: ClusterIP
-volumes:
-  - name: data
-    nfs:
-      path: /nfs/data
-      server: 10.16.131.27
