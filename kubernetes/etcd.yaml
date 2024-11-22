@@ -26,7 +26,7 @@ spec:
             server: 10.16.131.27
       containers:
         - name: apisix-etcd
-          image: docker.io/bitnami/etcd:3.5.1-debian-10-r31
+          image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/bitnami/etcd:3.5.1-debian-10-r31
           ports:
             - name: client
               containerPort: 2379
